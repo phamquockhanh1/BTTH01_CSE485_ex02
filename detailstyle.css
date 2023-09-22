@@ -1,0 +1,17 @@
+.maincontent{
+    display: flex;
+    justify-content: space-around;
+}
+.paragr{
+    padding-right: 5px;
+}
+.paragr span{
+    font-weight: normal;    
+}
+.footer {
+    margin-top: 60px;
+    text-align: center;
+}
+.html{
+    padding: 10px;
+}

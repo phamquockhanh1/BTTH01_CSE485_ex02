@@ -29,7 +29,8 @@ h3 {
     display: flex;
 }
 button{
-    border: 2px;
+    border: 1px;
+    border-color: green;
 }
 .header a{
     color: black;
