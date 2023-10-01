@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 .smcontainer{
     
     margin-left: 35%;
@@ -55,62 +55,5 @@
     }
 
     
-=======
-.smcontainer{
     
-    margin-left: 35%;
-    width: 440px;
-    height: 390px;
-    border: solid gray 1px;
-    background-color: rgb(127, 127, 127);
-}
-.smcontainer .top{
-    height: 20%;
-    color: aliceblue;
-    width: 100%;
-    margin-left: 5%;
-
-}
-.smcontainer .formlg{
-    width: 100%;
-    margin-left: 5%;
-}
-.smcontainer .formlg input{
-    width: 90%;
-    border-radius: 2px 2px 2px 2px;
-    margin-top: 5px;
-}
-.rmb{
-    margin-left: 0%;
-    width: 9%;
-    display: flex ;
-    
-}
-.rmb .txt{
-    margin-left: 10px;
-    width: 30%;
-}
-.formlg button{
-    position: relative;
-    width: 20%;
-    left:70%;
-    border-radius: 5px 5px 5px 5px;
-    color: black;
-    background-color: yellow;
-}
-.foot{
-    text-align: center;
-}
-.foot a{
-    
-    color: yellow;
-    text-align: center;
-}
-@media  (max-width: 768px){
-    .container .smcontainer{
-        width:40%;
-    }
-
-    
->>>>>>> 82b80aa6d8d18d5e356b514a62d21e42400291fe
 }
