@@ -7,7 +7,7 @@
     <title>Document</title>
     <style>
         .maincontent{
-            margin-left: 32%;
+            margin-left: 25%;
             margin-top: 100px;
         }
         .maincontent table{

@@ -1,23 +1,21 @@
 <?php
-$servername='localhost';
-$username='root';
-$password='';
-$dbname='btth01_cse485';
-$conn=new mysqli($servername,$username,$password,$dbname);
-if ($conn->connect_error){
-    die ('cant connect'.$conn->connect_error);
-}
-$sql='SELECT * FROM theloai';
-$result=$conn->query($sql);
-$conn->close();
+$servername = 'localhost';
+$username = 'root';
+$password = '';
+$dbname = 'btth01_cse485';
 
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die('Connection failed: ' . $e->getMessage());
+}
+
+$sql = 'SELECT * FROM theloai';
+$result = $conn->query($sql);
 ?>
 
-
-
-
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -26,61 +24,59 @@ $conn->close();
     <title>Document</title>
     <link rel="stylesheet" href="fontawesome-free-6.4.0-web/css/all.css">
     <style>
-        .maincontent table tr{
+        .maincontent table tr {
             font-size: 30px;
-            
-
         }
-        .maincontent table{
+
+        .maincontent table {
             margin-left: 20%;
         }
-        button{
+
+        button {
             background-color: green;
             height: 30px;
             border: none;
             color: aliceblue;
-            border-radius: 5px 5px 5px 5px;}
-        td,th{
-            padding-right:  100px;
-
+            border-radius: 5px 5px 5px 5px;
         }
-        
-    </style>
 
+        td, th {
+            padding-right: 100px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <?php include'headerad.php'?>
-        </div>
-        <div class="maincontent">
-        
-            <table>
-                <tr>
-                    <th><button>Thêm Mới</button></th>
-                </tr>
-                <tr>
-                    <th>#</th>
-                    <th>Tên thể loại</th>
-                    <th>Sửa</th>
-                    <th>Xóa</th>
-                </tr>
-                <?php
-                if($result->num_rows>0){
-                    while($row=$result->fetch_assoc()){
-                         echo'<tr>';                     
-                        echo'<td>'.$row["ma_tloai"];
-                        echo'<td>'.$row["ten_tloai"];
-                        echo '<td><a href="edit_category.php"><i class="fas fa-pen-to-square"></i></a></td>';
-                        echo'<td><a href=""><i class="fa-solid fa-trash"></i></a></td>';
-                        echo'<tr/>';
-
-                    }
-                }
-                ?>
-            </table>
-        </div>
+<div class="container">
+    <div class="header">
+        <?php include 'headerad.php' ?>
     </div>
-    
+    <div class="maincontent">
+        <table>
+            <tr>
+                <th><button>Thêm Mới</button></th>
+            </tr>
+            <tr>
+                <th>#</th>
+                <th>Tên thể loại</th>
+                <th>Sửa</th>
+                <th>Xóa</th>
+            </tr>
+            <?php
+            if ($result->rowCount() > 0) {
+                foreach ($result as $row) {
+                    echo '<tr>';
+                    echo '<td>' . $row['ma_tloai'] . '</td>';
+                    echo '<td>' . $row['ten_tloai'] . '</td>';
+                    echo '<td><a href="edit_category.php"><i class="fas fa-pen-to-square"></i></a></td>';
+                    echo '<td><a href="delete_category.php"><i class="fa-solid fa-trash"></i></a></td>';
+                    echo '</tr>';
+                }
+            } else {
+                echo "<tr><td colspan='4'>No records found</td></tr>";
+            }
+            ?>
+        </table>
+    </div>
+</div>
 </body>
 </html>

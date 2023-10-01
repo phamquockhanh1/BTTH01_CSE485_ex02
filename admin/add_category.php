@@ -1,25 +1,31 @@
+<?php
+$servername = 'localhost';
+$username = 'root';
+$password = '';
+$dbname = 'btth01_cse485';
 
-<?php 
-$ten_tloai=$_POST['ten_tloai'];
-$servername='localhost';
-$username='root';
-$password='';
-$dbname='btth01_cse485';
-$conn=new mysqli($servername,$username,$password,$dbname);
-if($conn->connect_error){
-    die("Không thể kết nối tới cơ sở dữ liệu".$conn->connect_error);
-}
-// Chuẩn bị câu lệnh SQL để chèn dữ liệu vào bảng
-$sql = "INSERT INTO theloai (ten_tloai) VALUES ('$ten_tloai')";
-if ($conn->query($sql) === TRUE) {
-    echo "Data added successfully";
-    
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die('Connection failed: ' . $e->getMessage());
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $ten_tloai = $_POST['ten_tloai'];
+
+    $sql = "INSERT INTO theloai (ten_tloai) VALUES (:ten_tloai)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':ten_tloai', $ten_tloai, PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        echo "Data added successfully";
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,37 +51,32 @@ if ($conn->query($sql) === TRUE) {
             display: flex;
             margin-left: 81%;
             margin-top: 10px;
-           gap: 10px;
+            gap: 10px;
             padding-top: 15px;
-            
-
-            
         }
         button {
             height: 30px;
             border-radius: 5px;
             border: none;
-            
         }
-        
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- header -->
-        <div class="header">
-            <?php include 'headerad.php' ?>
-        </div>
-        <div class="maincontent">
-            <h2>THÊM MỚI THỂ LOẠI</h2>
-            <form action="add_category.php" method="post">
-                <input type="text" id="ten_tloai" name="ten_tloai" required >
-                <div class="btn-container">
-                    <button  " class="btn1" style="color: beige; background-color: green; margin-left:5px ; "  type="submit">Thêm</button>
-                    <a href="category.php">Quay lại</a>
-                </div>
-            </form>
-        </div>
+<div class="container">
+    <!-- header -->
+    <div class="header">
+        <?php include 'headerad.php' ?>
     </div>
+    <div class="maincontent">
+        <h2>THÊM MỚI THỂ LOẠI</h2>
+        <form action="add_category.php" method="post">
+            <input type="text" id="ten_tloai" name="ten_tloai" required>
+            <div class="btn-container">
+                <button class="btn1" style="color: beige; background-color: green; margin-left: 5px;" type="submit">Thêm</button>
+                <a href="category.php">Quay lại</a>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>

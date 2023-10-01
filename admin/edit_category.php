@@ -3,22 +3,28 @@ $servername = 'localhost';
 $username = 'root';
 $password = '';
 $dbname = 'btth01_cse485';
-$conn = new mysqli($servername, $username, $password, $dbname);
 
-if ($conn->connect_error) {
-    die('Không thể kết nối tới cơ sở dữ liệu: ' . $conn->connect_error);
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die('Connection failed: ' . $e->getMessage());
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ma_tloai = $_POST['ma_tloai'];
     $ten_tloai = $_POST['ten_tloai'];
 
-    $sql = "UPDATE theloai SET ten_tloai = '$ten_tloai' WHERE ma_tloai = '$ma_tloai'";
+    $sql = "UPDATE theloai SET ten_tloai = :ten_tloai WHERE ma_tloai = :ma_tloai";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':ten_tloai', $ten_tloai, PDO::PARAM_STR);
+    $stmt->bindParam(':ma_tloai', $ma_tloai, PDO::PARAM_INT);
 
-    if ($conn->query($sql) === TRUE) {
+    try {
+        $stmt->execute();
         echo 'Cập nhật thông tin thành công';
-    } else {
-        echo 'Lỗi: ' . $sql . '<br>' . $conn->error;
+    } catch (PDOException $e) {
+        echo 'Lỗi: ' . $e->getMessage();
     }
 }
 ?>

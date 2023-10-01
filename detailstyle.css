@@ -1,4 +1,5 @@
-<<<<<<< HEAD
+
+
 .maincontent{
     display: flex;
     justify-content: space-around;
@@ -15,22 +16,10 @@
 }
 .html{
     padding: 10px;
-=======
-.maincontent{
-    display: flex;
-    justify-content: space-around;
+
 }
-.paragr{
-    padding-right: 5px;
-}
-.paragr span{
-    font-weight: normal;    
-}
-.footer {
-    margin-top: 60px;
-    text-align: center;
-}
-.html{
-    padding: 10px;
->>>>>>> 82b80aa6d8d18d5e356b514a62d21e42400291fe
+@media(max-width:768px){
+    .maincontent{
+        width: 40%;
+    }
 }
